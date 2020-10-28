@@ -43,11 +43,11 @@ away = st.selectbox(
 
 year_start = st.selectbox(
     'Year start for analysis',
-     list(range(2012,2020,1)))
+     list(range(fin_results.Season.min(),2020,1)))
 
 
-def run_simulation(fin_results, home, away, year_start, nr_simulations=10000):
-    results = fin_results[(fin_results.Home==home) & (fin_results.Away==away) & (fin_results.Season>year_start)]
+def run_simulation(fin_results, home, away, year_start, nr_simulations=100000):
+    results = fin_results[(fin_results.Home==home) & (fin_results.Away==away) & (fin_results.Season>=year_start)]
     HG_mean = results.HG.mean()
     AG_mean = results.AG.mean()
 
@@ -73,7 +73,7 @@ def run_simulation(fin_results, home, away, year_start, nr_simulations=10000):
 simulations_df = run_simulation(fin_results, home, away, year_start, nr_simulations=10000)
 
 st.header("Former games")
-st.dataframe(fin_results[(fin_results.Home==home) & (fin_results.Away==away) & (fin_results.Season>year_start)])
+st.dataframe(fin_results[(fin_results.Home==home) & (fin_results.Away==away) & (fin_results.Season>=year_start)])
 
 st.header("Predicted outcomes")
 st.dataframe(simulations_df)
